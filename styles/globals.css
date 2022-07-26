@@ -19,6 +19,7 @@ a {
   box-sizing: border-box;
 }
 
+/*
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
@@ -28,3 +29,8 @@ a {
     background: black;
   }
 }
+*/
+.btn-trans-black {
+  @apply text-black bg-black bg-opacity-10 hover:bg-opacity-30  items-center relative h-7 items-center font-mono tracking-wider pt-0.5 md:pt-0 duration-1000 uppercase text-sm duration-200 items-center px-4 rounded  flex justify-center flex-row;
+}
+

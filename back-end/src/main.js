@@ -3,8 +3,6 @@ const bodyParser = require('body-parser')
 const axios = require('axios')
 const cors = require('cors')
 const jwt = require('jsonwebtoken')
-const multer = require('multer');
-const upload = multer();
 
 const config = require('../config');
 const { expressLogger, logger } = require('./logger')

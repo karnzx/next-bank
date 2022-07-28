@@ -3,6 +3,7 @@ import React, { useContext, useRef, useState } from "react";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import config from "../../config";
 import { AuthContext } from "../_app";
+import { AccountInfoType, getAccountInfo } from "../../helper/account";
 
 const Login: NextPage = () => {
   const [loginError, setLoginError] = useState("");
@@ -12,7 +13,16 @@ const Login: NextPage = () => {
   const password = useRef<HTMLInputElement>(null);
 
   if (isauth) {
-    window.location.href = "/";
+    getAccountInfo()
+      .then((res: AccountInfoType) => {
+        setAuth(true);
+        window.location.href = "/";
+      })
+      .catch((err: AxiosError) => {
+        sessionStorage.removeItem("access_token");
+        setAuth(false);
+        window.location.reload();
+      });
   }
   type LoginResponse = {
     access_token: string;

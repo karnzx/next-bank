@@ -1,3 +1,4 @@
+import { AxiosError } from "axios";
 import type { NextPage } from "next";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -5,12 +6,20 @@ import { AccountInfoType, getAccountInfo } from "../../../helper/account";
 
 const Profile: NextPage = () => {
   const [user, setUserData] = useState<AccountInfoType>();
-  useEffect(() => {
-    getAccountInfo().then((res: AccountInfoType) => {
-      setUserData(res);
-    });
-  }, []);
 
+  const refeshUserAccountInfo = () => {
+    getAccountInfo()
+      .then((res: AccountInfoType) => {
+        setUserData(res);
+      })
+      .catch((err: AxiosError) => {
+        window.location.href = "/login";
+      });
+  };
+
+  useEffect(() => {
+    refeshUserAccountInfo();
+  }, []);
   return (
     <>
       <div className="flex justify-center">
@@ -36,19 +45,13 @@ const Profile: NextPage = () => {
                 <div className="actions py-5">
                   <div className="md:flex md:justify-center grid gap-5">
                     <div>
-                      <Link href="/user/deposit">
+                      <Link href="/user/withdraw&amp;deposit">
                         <a className="capitalize bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
-                          deposit
+                          withdraw and deposit
                         </a>
                       </Link>
                     </div>
-                    <div>
-                      <Link href="/user/withdraw">
-                        <a className="capitalize bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
-                          withdraw
-                        </a>
-                      </Link>
-                    </div>
+
                     <div>
                       <Link href="/user/transfer">
                         <a className="capitalize bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">

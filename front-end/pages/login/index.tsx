@@ -3,7 +3,6 @@ import React, { useContext, useRef, useState } from "react";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import config from "../../config";
 import { AuthContext } from "../_app";
-import Link from "next/link";
 
 const Login: NextPage = () => {
   const [loginError, setLoginError] = useState("");
@@ -91,7 +90,7 @@ const Login: NextPage = () => {
                 />
               </div>
             </div>
-            {loginError != null ? (
+            {loginError != "" ? (
               <div className="text-center pb-5">
                 <p className="text-red-500">{loginError}</p>
               </div>

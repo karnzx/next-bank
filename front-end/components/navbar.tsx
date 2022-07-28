@@ -22,6 +22,7 @@ export default function Navbar() {
   const logOut = () => {
     sessionStorage.removeItem("access_token");
     setAuth(false);
+    window.location.href = "/";
   };
 
   return (

@@ -33,15 +33,23 @@ export default function Navbar() {
         <div className="hidden md:flex gap-3 basis-1/1">
           <ButtonLink path={"/"} text="home" />
           <ButtonLink path={"/about"} text="about us" />
-          <ButtonLink path={"/user/profile"} text="profile" />
+
+          {isauth ? <ButtonLink path={"/user/profile"} text="profile" /> : ""}
         </div>
         <div className="">
           {isauth ? (
-            <button className="btn-trans-black capitalize" onClick={logOut}>
+            <button
+              className="text-black bg-red-900 bg-opacity-10 hover:bg-opacity-30  relative h-7 items-center font-mono tracking-wider pt-0.5 md:pt-0 uppercase text-sm duration-200 px-4 rounded flex justify-center flex-row;"
+              onClick={logOut}
+            >
               Logout
             </button>
           ) : (
-            <ButtonLink path={"/login"} text="login" />
+            <Link href="/login">
+              <a className="text-black bg-blue-900 bg-opacity-10 hover:bg-opacity-30  relative h-7 items-center font-mono tracking-wider pt-0.5 md:pt-0 uppercase text-sm duration-200 px-4 rounded flex justify-center flex-row;">
+                login
+              </a>
+            </Link>
           )}
         </div>
       </div>

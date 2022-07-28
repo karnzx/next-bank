@@ -19,6 +19,52 @@ app.use('/img', express.static('public'))
 app.use(expressLogger);
 app.use(bodyParser.json())
 
+const authenticated = (req, res, next) => {
+    const auth_header = req.headers['authorization']
+    const token = auth_header && auth_header.split(' ')[1]
+    if (!token) return res.sendStatus(401)
+    jwt.verify(token, TOKEN_SECRET, (err, data) => {
+        if (err) return res.sendStatus(403)
+        req.data = {
+            ...req.data,
+            userId: data.id
+        }
+        next()
+    })
+}
+
+app.get('/api/info', authenticated, async (req, res) => {
+    const user = await models.User.findOne({ _id: req.data.userId }).exec()
+    res.send({ username: user.username, balance: user.balance })
+})
+
+app.post('/api/deposit', authenticated, async (req, res) => {
+    const user = await models.User.findOne({ _id: req.data.userId }).exec()
+    const amount = req.body.amount
+    if (req.data.amount < 0) {
+        res.status(400).send("Invalid amount")
+        return
+    }
+    user.balance += amount
+    user.save()
+    res.send('ok')
+})
+
+app.post('/api/withdraw', authenticated, async (req, res) => {
+    const user = await models.User.findOne({ _id: req.data.userId }).exec()
+    const amount = req.body.amount
+    if (req.data.amount < 0) {
+        res.status(400).send("Invalid amount")
+        return
+    } else if (user.balance < amount) {
+        res.status(403).send("Balance is less than withdraw amount")
+        return
+    }
+    user.balance -= amount
+    user.save()
+    res.send('ok')
+})
+
 app.post('/api/login', async (req, res) => {
     let username = req.body.username;
     let password = req.body.password;
@@ -29,7 +75,7 @@ app.post('/api/login', async (req, res) => {
     }
 
     const sendInvalidUserPassword = () => {
-        res.status(401).send('Invalid user or Password')
+        res.status(403).send('Invalid user or Password')
     }
     // search username in db
     let user = await models.User.findOne({ username: username }).exec()

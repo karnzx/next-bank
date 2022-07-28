@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { AuthContext } from "../pages/_app";
 
 type ButtonLinkType = {
   path: string;
@@ -16,6 +17,13 @@ const ButtonLink = ({ path, text }: ButtonLinkType) => {
 };
 
 export default function Navbar() {
+  const { isauth, setAuth } = useContext(AuthContext);
+
+  const logOut = () => {
+    sessionStorage.removeItem("access_token");
+    setAuth(false);
+  };
+
   return (
     <nav className="p-4">
       <div className="flex justify-between items-center">
@@ -28,7 +36,13 @@ export default function Navbar() {
           <ButtonLink path={"/user/profile"} text="profile" />
         </div>
         <div className="">
-          <ButtonLink path={"/login"} text="login" />
+          {isauth ? (
+            <button className="btn-trans-black capitalize" onClick={logOut}>
+              Logout
+            </button>
+          ) : (
+            <ButtonLink path={"/login"} text="login" />
+          )}
         </div>
       </div>
     </nav>

@@ -20,17 +20,13 @@ const Layout: React.FC<Props> = ({ children }) => {
         <Navbar />
       </header>
 
-      <main className={styles.main}>{children}</main>
+      <main className="min-h-screen pt-16 px-5 pb-10">{children}</main>
 
       <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <a href="" target="_blank" rel="noopener noreferrer">
           Powered by Piravit Chenpittaya{" "}
           <span className={styles.logo}>
-            <Image src="" alt="" width={72} height={16} />
+            <Image src="/favicon.ico" alt="icon" width={16} height={16} />
           </span>
         </a>
       </footer>

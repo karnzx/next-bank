@@ -8,6 +8,7 @@ import {
   useEffect,
   useState,
 } from "react";
+import axios, { AxiosRequestConfig } from "axios";
 
 export type AuthContextType = {
   isauth: boolean;
@@ -18,6 +19,20 @@ export const AuthContext = createContext<AuthContextType>({
   isauth: false,
   setAuth: () => {},
 });
+
+axios.interceptors.request.use(
+  function (config: AxiosRequestConfig) {
+    const token = sessionStorage.getItem("access_token");
+    if (!config.headers) {
+      config.headers = {};
+    }
+    if (token) config.headers["Authorization"] = `Bearer ${token}`;
+    return config;
+  },
+  function (err) {
+    return Promise.reject(err);
+  }
+);
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [isauth, setAuth] = useState<boolean>(false);

@@ -44,11 +44,12 @@ app.post('/api/deposit', authenticated, async (req, res) => {
     if (req.data.amount < 0) return res.status(400).send("Invalid amount")
     user.balance += amount
     user.save()
+    logger.info(`user ${user._id} deposit ${amount}`)
     res.send('ok')
 })
 
 app.post('/api/withdraw', authenticated, async (req, res) => {
-    const user = await models.user.findone({ _id: req.data.userid }).exec()
+    const user = await models.User.findOne({ _id: req.data.userId }).exec()
     const amount = req.body.amount
     if (req.data.amount < 0) {
         return res.status(400).send("Invalid amount")
@@ -57,6 +58,25 @@ app.post('/api/withdraw', authenticated, async (req, res) => {
     }
     user.balance -= amount
     user.save()
+    logger.info(`user ${user._id} withdraw ${amount}`)
+    res.send('ok')
+})
+
+
+app.post('/api/transfer', authenticated, async (req, res) => {
+    const from = await models.User.findOne({ _id: req.data.userId }).exec()
+    const to = await models.User.findOne({ username: req.body.to }).exec()
+    const amount = req.body.amount
+    if (req.data.amount < 0) return res.status(400).send("Invalid amount")
+    else if (to == null) return res.status(400).send("Invalid transfer destination account")
+    else if (from.username == to.username) return res.status(400).send("Destination account must not same as tranferer")
+    else if (from.balance < amount) return res.status(403).send("Balance is less than transfer amount")
+    from.balance -= amount
+    to.balance += amount
+
+    from.save()
+    to.save()
+    logger.info(`user ${from._id} transfer ${amount} to ${to._id}`)
     res.send('ok')
 })
 

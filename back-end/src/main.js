@@ -41,24 +41,19 @@ app.get('/api/info', authenticated, async (req, res) => {
 app.post('/api/deposit', authenticated, async (req, res) => {
     const user = await models.User.findOne({ _id: req.data.userId }).exec()
     const amount = req.body.amount
-    if (req.data.amount < 0) {
-        res.status(400).send("Invalid amount")
-        return
-    }
+    if (req.data.amount < 0) return res.status(400).send("Invalid amount")
     user.balance += amount
     user.save()
     res.send('ok')
 })
 
 app.post('/api/withdraw', authenticated, async (req, res) => {
-    const user = await models.User.findOne({ _id: req.data.userId }).exec()
+    const user = await models.user.findone({ _id: req.data.userid }).exec()
     const amount = req.body.amount
     if (req.data.amount < 0) {
-        res.status(400).send("Invalid amount")
-        return
+        return res.status(400).send("Invalid amount")
     } else if (user.balance < amount) {
-        res.status(403).send("Balance is less than withdraw amount")
-        return
+        return res.status(403).send("Balance is less than withdraw amount")
     }
     user.balance -= amount
     user.save()
@@ -69,30 +64,21 @@ app.post('/api/login', async (req, res) => {
     let username = req.body.username;
     let password = req.body.password;
 
-    if (!username || !password) {
-        res.sendStatus(400).send("User or Password not provided")
-        return
-    }
+    if (!username || !password) return res.sendStatus(400).send("User or Password not provided")
 
     const sendInvalidUserPassword = () => {
         res.status(403).send('Invalid user or Password')
     }
     // search username in db
     let user = await models.User.findOne({ username: username }).exec()
-    if (user == null) {
-        sendInvalidUserPassword()
-        return
-    }
+    if (user == null) return sendInvalidUserPassword()
     user.comparePassword(password, function (err, isMatch) {
         if (err) {
             logger.error(err);
             res.status(500).send()
         }
         // console.log(user, isMatch);
-        if (!isMatch) {
-            sendInvalidUserPassword()
-            return
-        }
+        if (!isMatch) return sendInvalidUserPassword()
         logger.info(`user: ${user.id} grant access token`)
         let access_token = jwt.sign({ id: user._id }, TOKEN_SECRET, { expiresIn: TOKEN_EXPIRES_IN })
         res.send({ access_token })

@@ -1,12 +1,12 @@
-import React from 'react'
-import Navbar from '../components/navbar'
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+import React from "react";
+import Navbar from "../components/navbar";
+import Head from "next/head";
+import Image from "next/image";
+import styles from "../styles/Home.module.css";
 
 type Props = {
-  children: React.ReactNode
-}
+  children: React.ReactNode;
+};
 
 const Layout: React.FC<Props> = ({ children }) => {
   return (
@@ -20,7 +20,7 @@ const Layout: React.FC<Props> = ({ children }) => {
         <Navbar />
       </header>
 
-      <main>{children}</main>
+      <main className={styles.main}>{children}</main>
 
       <footer className={styles.footer}>
         <a
@@ -28,14 +28,14 @@ const Layout: React.FC<Props> = ({ children }) => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by{' '}
+          Powered by Piravit Chenpittaya{" "}
           <span className={styles.logo}>
             <Image src="" alt="" width={72} height={16} />
           </span>
         </a>
       </footer>
     </>
-  )
-}
+  );
+};
 
-export default Layout
+export default Layout;

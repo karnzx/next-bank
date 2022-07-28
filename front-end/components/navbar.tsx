@@ -1,18 +1,19 @@
-import React from 'react'
-import Link from 'next/link'
-import Image from 'next/image'
+import React from "react";
+import Link from "next/link";
+import Image from "next/image";
 
 type ButtonLinkType = {
-  path: string
-}
+  path: string;
+  text: string;
+};
 
-const ButtonLink = ({ path }: ButtonLinkType) => {
+const ButtonLink = ({ path, text }: ButtonLinkType) => {
   return (
-    <Link href={`/${path}`}>
-      <a className="btn-trans-black capitalize">{path}</a>
+    <Link href={path}>
+      <a className="btn-trans-black capitalize">{text}</a>
     </Link>
   );
-}
+};
 
 export default function Navbar() {
   return (
@@ -22,13 +23,12 @@ export default function Navbar() {
           <Image src="/favicon.ico" alt="" width={40} height={40} />
         </div>
         <div className="hidden md:flex gap-3 basis-1/1">
-          <ButtonLink path={"home"} />
-          <ButtonLink path={"about"} />
+          <ButtonLink path={"/"} text="home" />
+          <ButtonLink path={"/about"} text="about us" />
+          <ButtonLink path={"/user/profile"} text="profile" />
         </div>
         <div className="">
-          <button className="btn-trans-black">
-            Login
-          </button>
+          <ButtonLink path={"/login"} text="login" />
         </div>
       </div>
     </nav>

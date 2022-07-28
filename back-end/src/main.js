@@ -46,6 +46,31 @@ app.get('/api/info', authenticated, async (req, res) => {
     res.send({ username: user.username, balance: user.balance })
 })
 
+app.get('/api/transactions', authenticated, async (req, res) => {
+    const user = await models.User.findOne({ _id: req.data.userId }).exec()
+    // const transaction = await models.Transaction.find({ "$or": [{ from: user._id }, { to: user._id }] })
+    const userTransaction = { transfer: [], receive: [], }
+    let transactions = await models.Transaction.find({ from: user._id }).populate('to').exec()
+    let date = ""
+    for (let transaction of transactions) {
+        date = `${transaction.createAt.getDate()}/${transaction.createAt.getMonth() + 1}/${transaction.createAt.getFullYear()}`
+        userTransaction.transfer.push({
+            from: user.username, to: transaction.to.username, remain: transaction.remain.from,
+            amount: transaction.amount, action: transaction.action, dateTime: date
+        })
+    }
+    transactions = await models.Transaction.find({ to: user._id }).populate('from').exec()
+    for (let transaction of transactions) {
+        date = `${transaction.createAt.getDate()}/${transaction.createAt.getMonth() + 1}/${transaction.createAt.getFullYear()}`
+        userTransaction.receive.push({
+            from: transaction.from.username, to: user.username, remain: transaction.remain.to,
+            amount: transaction.amount, action: transaction.action, dateTime: date
+        })
+    }
+    // console.log(transactions)
+    res.send({ ...userTransaction })
+})
+
 app.post('/api/deposit', authenticated, async (req, res) => {
     const user = await models.User.findOne({ _id: req.data.userId }).exec()
     const amount = filterInt(req.body.amount)

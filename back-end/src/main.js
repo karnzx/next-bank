@@ -40,8 +40,8 @@ app.get('/api/info', authenticated, async (req, res) => {
 
 app.post('/api/deposit', authenticated, async (req, res) => {
     const user = await models.User.findOne({ _id: req.data.userId }).exec()
-    const amount = req.body.amount
-    if (req.data.amount < 0) return res.status(400).send("Invalid amount")
+    const amount = parseInt(req.body.amount)
+    if (amount <= 0) return res.status(400).send("Invalid amount")
     user.balance += amount
     user.save()
     logger.info(`user ${user._id} deposit ${amount}`)
@@ -50,8 +50,8 @@ app.post('/api/deposit', authenticated, async (req, res) => {
 
 app.post('/api/withdraw', authenticated, async (req, res) => {
     const user = await models.User.findOne({ _id: req.data.userId }).exec()
-    const amount = req.body.amount
-    if (req.data.amount < 0) {
+    const amount = parseInt(req.body.amount)
+    if (amount <= 0) {
         return res.status(400).send("Invalid amount")
     } else if (user.balance < amount) {
         return res.status(403).send("Balance is less than withdraw amount")
@@ -66,8 +66,8 @@ app.post('/api/withdraw', authenticated, async (req, res) => {
 app.post('/api/transfer', authenticated, async (req, res) => {
     const from = await models.User.findOne({ _id: req.data.userId }).exec()
     const to = await models.User.findOne({ username: req.body.to }).exec()
-    const amount = req.body.amount
-    if (req.data.amount < 0) return res.status(400).send("Invalid amount")
+    const amount = parseInt(req.body.amount)
+    if (amount <= 0) return res.status(400).send("Invalid amount")
     else if (to == null) return res.status(400).send("Invalid transfer destination account")
     else if (from.username == to.username) return res.status(400).send("Destination account must not same as tranferer")
     else if (from.balance < amount) return res.status(403).send("Balance is less than transfer amount")

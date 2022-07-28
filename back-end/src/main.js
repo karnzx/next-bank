@@ -73,10 +73,20 @@ app.post('/api/transfer', authenticated, async (req, res) => {
     else if (from.balance < amount) return res.status(403).send("Balance is less than transfer amount")
     from.balance -= amount
     to.balance += amount
-
     from.save()
     to.save()
-    logger.info(`user ${from._id} transfer ${amount} to ${to._id}`)
+
+    const transaction = await models.Transaction.create({
+        from: from,
+        to: to,
+        amount: amount,
+        action: "transfer",
+        remain: {
+            from: from.balance,
+            to: to.balance,
+        }
+    })
+    logger.info(`user ${from._id} transfer ${amount} to ${to._id} with transaction-id: ${transaction._id}`)
     res.send('ok')
 })
 

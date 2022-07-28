@@ -31,6 +31,7 @@ db.on('connecting', function () {
 });
 connectMongodb()
 
+// User 
 const User = model("User", Schema({
     username: { type: String, required: true, indexed: true, unique: true },
     password: { type: String, required: true },
@@ -66,4 +67,17 @@ const User = model("User", Schema({
     });
 }))
 
-module.exports = { User };
+// Transaction
+const Transaction = model("Transaction", Schema({
+    from: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+    to: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+    amount: { type: Number, required: true },
+    action: { type: String, required: true },
+    remain: { // remaining balance each user
+        from: { type: Number, required: true },
+        to: { type: Number, required: true },
+    },
+    createAt: { type: Date, default: Date.now() },
+}))
+
+module.exports = { User, Transaction };

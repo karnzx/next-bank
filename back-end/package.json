@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "back-end of Next Bank",
   "main": "src/main.js",
+  "scripts": {
+    "dev": "npx nodemon src/main.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "author": "piravit chenpittaya",
   "license": "MIT",
   "dependencies": {

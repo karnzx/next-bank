@@ -19,6 +19,10 @@ a {
   box-sizing: border-box;
 }
 
+.main-bg-img{
+  background-image: url("/imgs/pexels-ivan-samkov-7621142.jpg");
+}
+
 /*
 @media (prefers-color-scheme: dark) {
   html {

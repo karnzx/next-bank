@@ -3,7 +3,7 @@ import type { NextPage } from "next";
 const About: NextPage = () => {
   return (
     <div className="flex flex-col justify-center items-center min-h-screen">
-      <h1 className="text-[4rem] leading-5 m-0">About</h1>
+      <h1 className="text-[4rem] font-bold leading-5 m-0">About</h1>
 
       <p className="text-[1.5rem] my-[4rem] text-center leading-relaxed ">
         web applicaton about the Bank.

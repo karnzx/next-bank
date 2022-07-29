@@ -51,7 +51,7 @@ const Login: NextPage = () => {
 
   return (
     <>
-      <div className="flex justify-center pt-[10rem]">
+      <div className="flex justify-center items-center min-h-screen">
         {!isauth ? (
           <form
             onSubmit={handleSubmit}

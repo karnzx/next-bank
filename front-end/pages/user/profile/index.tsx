@@ -8,7 +8,6 @@ import {
   getTransactions,
   Transactions,
 } from "../../../helper/account";
-import strftime from "strftime";
 
 const Profile: NextPage = () => {
   const [user, setUserData] = useState<AccountInfoType>();
@@ -114,7 +113,7 @@ const Profile: NextPage = () => {
           <hr className="border-4 border-blue-200" />
           <div className="py-5">
             <table className="table-fixed w-full text-center">
-              <thead>
+              <thead className="bg-gray-200">
                 <tr>
                   <th>DateTime</th>
                   <th>User</th>
@@ -139,7 +138,7 @@ const Profile: NextPage = () => {
                     ))}
                   </>
                 ) : (
-                  ""
+                  <tr></tr>
                 )}
               </tbody>
             </table>

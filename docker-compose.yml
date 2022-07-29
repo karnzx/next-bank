@@ -1,0 +1,57 @@
+version: "3.8"
+services:
+  mongodb:
+    image: mongo
+    container_name: nextbank-mongodb
+    restart: on-failure
+    networks:
+      - nextbank
+    volumes:
+      - nextbank-db:/data/db
+
+  backend:
+    build: ./back-end
+    image: nextbank-backend
+    restart: on-failure
+    depends_on:
+      - mongodb
+    ports:
+      - 127.0.0.1:5000:5000
+    environment:
+      - NODE_ENV=production
+    networks:
+      - nextbank
+
+  frontend:
+    build: ./front-end
+    image: nextbank-frontend
+    restart: on-failure
+    ports:
+      - 80:80
+      - 443:443
+    depends_on:
+      - backend
+    # volumes:
+    #   - web-root:/usr/share/nginx/html
+    #   - certbot-etc:/etc/letsencrypt
+    #   - certbot-var:/var/lib/letsencrypt
+    environment:
+      - NODE_ENV=production
+    networks:
+      - nextbank
+
+  certbot:
+    image: certbot/certbot
+    container_name: nextbank-certbot
+    # volumes:
+    #   - web-root:/usr/share/nginx/html
+    #   - certbot-etc:/etc/letsencrypt
+    #   - certbot-var:/var/lib/letsencrypt
+    depends_on:
+      - frontend
+
+volumes:
+  nextbank-db:
+
+networks:
+  nextbank:

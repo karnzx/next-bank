@@ -25,12 +25,12 @@ const Deposit: NextPage = () => {
     refeshUserAccountInfo();
   }, []);
 
-  const handleDeposit = (ev: React.FormEvent<HTMLFormElement>) => {
+  const handleDeposit = (ev: React.MouseEvent<HTMLElement>) => {
     ev.preventDefault();
     requestTransaction("deposit");
   };
 
-  const handleWithdraw = (ev: React.FormEvent<HTMLFormElement>) => {
+  const handleWithdraw = (ev: React.MouseEvent<HTMLElement>) => {
     ev.preventDefault();
     requestTransaction("withdraw");
   };

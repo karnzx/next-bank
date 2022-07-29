@@ -38,8 +38,8 @@ const Profile: NextPage = () => {
   }, []);
   return (
     <>
-      <div className="flex justify-center">
-        <div className="p-10 items-center border border-blue-900 shadow-lg rounded-md">
+      <div className="flex justify-center items-center">
+        <div className="p-10 w-screen border border-blue-900 shadow-lg rounded-md">
           <h1 className="text-[3rem] font-bold under text-blue-700 text-center">
             Profile
           </h1>
@@ -47,7 +47,7 @@ const Profile: NextPage = () => {
           <div>
             {user ? (
               <div>
-                <div className="userData">
+                <div className="userData flex flex-col items-center">
                   <div className="text-[2rem] flex gap-3">
                     <h2>username: </h2>
                     <h2>{user.username}</h2>
@@ -129,7 +129,7 @@ const Profile: NextPage = () => {
                   <>
                     {txOnTable.map((data, index) => (
                       <tr key={`${data}-${index}`}>
-                        <td>{data.dateTime}</td>
+                        <td>{data.dateTime.toString()}</td>
                         <td>{data.to}</td>
                         <td>{data.remain}</td>
                         <td>{data.action}</td>

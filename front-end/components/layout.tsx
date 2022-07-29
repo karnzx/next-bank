@@ -20,7 +20,7 @@ const Layout: React.FC<Props> = ({ children }) => {
         <Navbar />
       </header>
 
-      <main className="min-h-screen pt-16 px-5 pb-10">{children}</main>
+      <main className="pt-16 px-5 pb-10">{children}</main>
 
       <footer className={styles.footer}>
         <a href="" target="_blank" rel="noopener noreferrer">

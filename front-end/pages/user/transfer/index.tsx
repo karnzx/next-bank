@@ -50,8 +50,8 @@ const Transfer: NextPage = () => {
 
   return (
     <>
-      <div className="flex justify-center">
-        <div className="p-10 items-center border border-blue-900 shadow-lg rounded-md">
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="p-10 lg:w-1/3 border border-blue-900 shadow-lg rounded-md">
           <h1 className="text-[3rem] font-bold under text-blue-700 text-center">
             Transfer
           </h1>
@@ -78,7 +78,7 @@ const Transfer: NextPage = () => {
           <div className="pt-5">
             <form onSubmit={handleSubmit}>
               <div className="md:flex md:items-center mb-6">
-                <div className="md:1/3">
+                <div className="md:w-1/3">
                   <label
                     htmlFor="toUser"
                     className="text-blue-700 font-bold md:text-right mb-1 md:mb-0 pr-4"
@@ -98,7 +98,7 @@ const Transfer: NextPage = () => {
                 </div>
               </div>
               <div className="md:flex md:items-center mb-6">
-                <div className="md:1/3">
+                <div className="md:w-1/3">
                   <label
                     htmlFor="amount"
                     className="text-blue-700 font-bold md:text-right mb-1 md:mb-0 pr-4"

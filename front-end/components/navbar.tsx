@@ -28,12 +28,13 @@ export default function Navbar() {
   return (
     <nav className="p-4">
       <div className="flex justify-between items-center">
-        <div className="basis-1/2 flex items-center">
+        <div className="basis-1/2 flex items-center gap-3">
           <Image src="/favicon.ico" alt="" width={40} height={40} />
+          <span className="text-xl font-mono font-bold">Next Bank</span>
         </div>
         <div className="hidden md:flex gap-3 basis-1/1">
           <ButtonLink path={"/"} text="home" />
-          <ButtonLink path={"/about"} text="about us" />
+          <ButtonLink path={"/about"} text="about" />
 
           {isauth ? <ButtonLink path={"/user/profile"} text="profile" /> : ""}
         </div>

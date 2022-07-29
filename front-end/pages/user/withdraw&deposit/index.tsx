@@ -57,7 +57,7 @@ const Deposit: NextPage = () => {
 
   return (
     <>
-      <div className="flex justify-center">
+      <div className="flex justify-center items-center min-h-screen">
         <div className="p-10 items-center border border-blue-900 shadow-lg rounded-md">
           <h1 className="text-[3rem] font-bold under text-blue-700 text-center">
             Withdraw &amp; Deposit
@@ -85,7 +85,7 @@ const Deposit: NextPage = () => {
           <div className="pt-5">
             <form>
               <div className="md:flex md:items-center mb-6">
-                <div className="md:1/3">
+                <div className="md:w-1/3">
                   <label
                     htmlFor="amount"
                     className="text-blue-700 font-bold md:text-right mb-1 md:mb-0 pr-4"

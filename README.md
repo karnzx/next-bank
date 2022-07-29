@@ -1,5 +1,13 @@
 # next-bank
-An application about the Bank. Deposit - Withdraw - Transfer money between users. (mock user) build with Nextjs, nodejs, MongoDB, TailwindCSS
+An application about the Bank. Deposit - Withdraw - Transfer money between users. (mocked user) build with Nextjs, nodejs, MongoDB, TailwindCSS
+
+### There is not register feature here. use mocked user from script instead.
+
+## mocked user 
+```
+cd back-end
+node scripts/mockUser.js
+```
 
 ## development
 In Linux or WSL easily just run `./start.sh` it will split 2 terminal in tmux and running backend and frontend process
